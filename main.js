@@ -7,29 +7,30 @@ Google sheet data by saving it as a JSON file periodically
 */
 
 /**
- * Where the Sheet is created and
+ * Where the Sheet is created and processed
  */
 function main() {
   const PublicGoogleSheetsParser = require("public-google-sheets-parser");
+  const fs = require('fs');
 
   //Link from sheet URL
   const spreadsheetId = "17zo5TRXxyMkAJ4WQBMmXey6jMMsHcnwA-ULVeM5YXsc";
 
   //Create Parser linked to the Public Sheet
   const parser = new PublicGoogleSheetsParser(spreadsheetId);
-  //Testing for output
+
+  //Parse Sheet then save to 'chartData.json'
+  console.log("Getting Sheet Data...\n\n");
   parser.parse().then((items) => {
-    processSheet(items);
+    let dataCleaned = JSON.stringify(columnSpliter(items));
+    fs.writeFileSync('chartData.json', dataCleaned);
+    console.log("Sheet Data written to chartData.json\n\n");
   });
 }
 
-/**
- * Takes the Sheet data and processses to exported as a JSON
- * @param {List of Dictionaries} sheetData
- */
-function processSheet(sheetData) {
-  let dataByColunms = columnSpliter(sheetData);
-}
+
+
+
 
 /**
  * Converts the Sheet from being sorted by Rows to Colunms
