@@ -7,11 +7,34 @@ Google sheet data by saving it as a JSON file periodically
 */
 
 /**
- * Where the Sheet is created and processed
+ * Main loop. Waits 'inverval' number of minutes before
+ * getting spread sheet data
  */
 function main() {
+  console.clear();
+  let minutes = 1;
+  let timer = minutes * 60;
+  let interval = minutes * 60 * 1000;
+  let dots = 3;
+  setInterval(() => {
+    readSheet();
+    timer = minutes * 60;
+  }, interval);
+  setInterval(() => {
+    console.clear();
+    if(dots == 0) dots = 3;
+    console.log("Seconds till Sheet is got: " + timer + " " + '.'.repeat(dots));
+    timer -= 1;
+    dots -= 1;
+  }, 1000);
+}
+
+/**
+ * Where the Sheet is created and processed
+ */
+function readSheet() {
   const PublicGoogleSheetsParser = require("public-google-sheets-parser");
-  const fs = require('fs');
+  const fs = require("fs");
 
   //Link from sheet URL
   const spreadsheetId = "17zo5TRXxyMkAJ4WQBMmXey6jMMsHcnwA-ULVeM5YXsc";
@@ -23,14 +46,10 @@ function main() {
   console.log("Getting Sheet Data...\n\n");
   parser.parse().then((items) => {
     let dataCleaned = JSON.stringify(columnSpliter(items));
-    fs.writeFileSync('chartData.json', dataCleaned);
+    fs.writeFileSync("chartData.json", dataCleaned);
     console.log("Sheet Data written to chartData.json\n\n");
   });
 }
-
-
-
-
 
 /**
  * Converts the Sheet from being sorted by Rows to Colunms
@@ -46,7 +65,7 @@ function columnSpliter(sheet) {
       if (!(item in columns)) {
         columns[item] = [element[item]];
       } else {
-          columns[item].push(element[item]);
+        columns[item].push(element[item]);
       }
     });
   });
