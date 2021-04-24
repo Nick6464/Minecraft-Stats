@@ -1,0 +1,12 @@
+{
+  "name": "node_minecraft",
+  "version": "1.0.0",
+  "description": "Gets data from a Google Sheet every 10 minutes. Parses it, then writes it to a JSON file.",
+  "main": "bot.js",
+  "scripts": {
+    "start": "node main.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Nick Walton",
+  "license": "ISC"
+}
