@@ -1,4 +1,4 @@
-# nodeCam
+# Minecraft Stats
 
 This repository is to suppliment a Minecraft Statistics webpage I'm creating for me and my friends.
 
